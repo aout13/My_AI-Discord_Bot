@@ -1,69 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy</title>
   <style>
     :root {
-      --bg-color: #f0f0f0;
-      --text-color: #333;
-      --accent-bg: #888;
-      --accent-text: #fff;
+      --bg-color: #ffffff;
+      --main-bg: #ffffff;
+      --text-color: #000000;
+      --accent-bg: #888888;
+      --accent-text: #ffffff;
     }
+
     [data-theme="dark"] {
       --bg-color: #121212;
+      --main-bg: #1e1e1e;
       --text-color: #e0e0e0;
-      --accent-bg: #888;
-      --accent-text: #fff;
     }
+
+    [data-theme="dark"] footer span {
+      color: yellow;
+    }
+
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      margin: 0;
-      padding: 0;
     }
+
     header {
       background-color: var(--accent-bg);
       color: var(--accent-text);
       padding: 1.5rem;
       text-align: center;
     }
+
     nav {
       background-color: var(--accent-bg);
       padding: 0.5rem;
       text-align: center;
     }
+
     nav a {
       color: var(--accent-text);
       margin: 0 1rem;
       text-decoration: none;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
-    .theme-toggle {
-      text-align: center;
-      margin: 1rem;
-    }
+
     main {
-      padding: 2rem;
       max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: auto;
+      padding: 2rem;
+      background-color: var(--main-bg);
+      color: var(--text-color);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 6px;
     }
+
     footer {
+      background-color: var(--accent-bg);
+      color: var(--accent-text);
       text-align: center;
       padding: 1rem;
-      background-color: #eee;
+    }
+
+    .theme-picker {
+      text-align: center;
+      background-color: var(--accent-bg);
+      color: var(--accent-text);
+      padding: 0.5rem;
+    }
+
+    select {
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
+  <div class="theme-picker">
+    Theme:
+    <select id="theme-select">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="system">System</option>
+    </select>
+  </div>
+
   <header>
     <h1>Privacy Policy</h1>
+    <p>Your data and privacy matters to us.</p>
   </header>
 
   <nav>
@@ -72,41 +103,42 @@
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 
-  <div class="theme-toggle">
-    <label for="theme">Theme: </label>
-    <select id="theme" onchange="setTheme(this.value)">
-      <option value="system">System</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
-  </div>
+  <main>
+    <h2>Privacy Policy</h2>
+    <p>This bot may collect limited data for performance and safety purposes:</p>
+    <ul>
+      <li>Command usage may be logged to monitor performance and abuse.</li>
+      <li>No personal user data is stored or shared with third parties.</li>
+      <li>Data collected is used solely to improve the bot’s functionality and reliability.</li>
+    </ul>
+  </main>
 
-<main>
-  <h2>Privacy Policy</h2>
-  <p>Your privacy matters. Here's how we handle your data:</p>
-  <ul>
-    <li>This bot does not collect personal information.</li>
-    <li>Only minimal command data may be stored for functionality and safety.</li>
-    <li>No data is sold or shared with third parties.</li>
-    <li>You may request deletion of any logged interactions at any time.</li>
-  </ul>
-</main>
-
-  <footer>Made with 💡 and AI.</footer>
+  <footer>
+    Made with <span>💡</span> and AI.
+  </footer>
 
   <script>
-    function setTheme(mode) {
-      if (mode === 'system') {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    const themeSelect = document.getElementById('theme-select');
+    const rootElement = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'system') {
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        rootElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
       } else {
-        document.documentElement.setAttribute('data-theme', mode);
+        rootElement.setAttribute('data-theme', theme);
       }
-      localStorage.setItem('theme', mode);
     }
-    const savedTheme = localStorage.getItem('theme') || 'system';
-    setTheme(savedTheme);
-    document.getElementById('theme').value = savedTheme;
+
+    themeSelect.addEventListener('change', () => {
+      const selectedTheme = themeSelect.value;
+      localStorage.setItem('theme', selectedTheme);
+      applyTheme(selectedTheme);
+    });
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    themeSelect.value = savedTheme;
+    applyTheme(savedTheme);
   </script>
 </body>
 </html>
