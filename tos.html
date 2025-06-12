@@ -6,72 +6,58 @@
   <title>Terms of Service</title>
   <style>
     :root {
-      --bg-color: #fff;
-      --text-color: #000;
-      --accent-bg: #000;
+      --bg-color: #f0f0f0;
+      --text-color: #333;
+      --accent-bg: #888;
       --accent-text: #fff;
     }
-
     [data-theme="dark"] {
       --bg-color: #121212;
       --text-color: #e0e0e0;
-      --accent-bg: #fff;
-      --accent-text: #000;
+      --accent-bg: #888;
+      --accent-text: #fff;
     }
-
     body {
+      font-family: Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
     }
-
     header {
       background-color: var(--accent-bg);
       color: var(--accent-text);
       padding: 1.5rem;
       text-align: center;
     }
-
     nav {
       background-color: var(--accent-bg);
-      text-align: center;
       padding: 0.5rem;
+      text-align: center;
     }
-
     nav a {
       color: var(--accent-text);
       margin: 0 1rem;
       text-decoration: none;
     }
-
     nav a:hover {
       text-decoration: underline;
     }
-
-    main {
-      padding: 2rem;
-      max-width: 800px;
-      margin: 0 auto;
-      background: var(--bg-color);
-    }
-
     .theme-toggle {
       text-align: center;
       margin: 1rem;
     }
-
-    select {
-      padding: 0.5rem;
-      font-size: 1rem;
+    main {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
     footer {
-      background-color: #ccc;
       text-align: center;
       padding: 1rem;
-      margin-top: 2rem;
+      background-color: #eee;
     }
   </style>
 </head>
@@ -82,41 +68,45 @@
 
   <nav>
     <a href="index.html">Home</a>
+    <a href="tos.html">Terms of Service</a>
     <a href="privacy.html">Privacy Policy</a>
   </nav>
 
+  <div class="theme-toggle">
+    <label for="theme">Theme: </label>
+    <select id="theme" onchange="setTheme(this.value)">
+      <option value="system">System</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+
   <main>
-    <div class="theme-toggle">
-      <label for="theme">Choose a theme: </label>
-      <select id="theme" onchange="setTheme(this.value)">
-        <option value="system">System</option>
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-      </select>
-    </div>
-
-    <h2>Usage Terms</h2>
-    <p>By using this Discord bot, you agree to use it respectfully and within the Discord community guidelines. The bot is provided “as is” and no guarantees are made regarding uptime or behavior.</p>
-
-    <h2>Prohibited Use</h2>
-    <p>Do not use the bot to promote NSFW, illegal, or harmful content. Misuse will result in a ban and/or removal from servers.</p>
-
-    <h2>Liability</h2>
-    <p>The bot creator is not responsible for any misuse or damages that occur as a result of using the bot.</p>
+    <h2>Terms of Service</h2>
+    <p>By using this bot or website, you agree to follow these basic rules:</p>
+    <ul>
+      <li>Use the bot responsibly and respectfully.</li>
+      <li>No spam, abuse, or harassment using the bot.</li>
+      <li>Do not use the bot for illegal or malicious activity.</li>
+      <li>This bot is provided "as-is" without any warranties.</li>
+    </ul>
+    <p>We reserve the right to ban users or stop offering the bot at any time.</p>
   </main>
 
-  <footer>
-    Made with 💡 and AI.
-  </footer>
+  <footer>Made with 💡 and AI.</footer>
 
   <script>
     function setTheme(mode) {
-      document.documentElement.setAttribute('data-theme', mode);
+      if (mode === 'system') {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', mode);
+      }
       localStorage.setItem('theme', mode);
     }
-
     const savedTheme = localStorage.getItem('theme') || 'system';
-    document.documentElement.setAttribute('data-theme', savedTheme);
+    setTheme(savedTheme);
     document.getElementById('theme').value = savedTheme;
   </script>
 </body>
