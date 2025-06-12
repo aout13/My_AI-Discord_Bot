@@ -7,20 +7,16 @@
   <style>
     :root {
       --bg-color: #ffffff;
-      --main-bg: #ffffff;
       --text-color: #000000;
       --accent-bg: #888888;
       --accent-text: #ffffff;
+      --footer-emoji-color: inherit;
     }
 
     [data-theme="dark"] {
-      --bg-color: #121212;
-      --main-bg: #1e1e1e;
-      --text-color: #e0e0e0;
-    }
-
-    [data-theme="dark"] footer span {
-      color: yellow;
+      --bg-color: #1e1e1e;
+      --text-color: #f0f0f0;
+      --footer-emoji-color: yellow;
     }
 
     body {
@@ -53,14 +49,17 @@
       text-decoration: underline;
     }
 
+    .theme-picker {
+      background-color: var(--accent-bg);
+      color: var(--accent-text);
+      text-align: center;
+      padding: 0.5rem;
+    }
+
     main {
       max-width: 800px;
-      margin: auto;
-      padding: 2rem;
-      background-color: var(--main-bg);
-      color: var(--text-color);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 6px;
+      margin: 2rem auto;
+      padding: 1.5rem;
     }
 
     footer {
@@ -70,15 +69,16 @@
       padding: 1rem;
     }
 
-    .theme-picker {
-      text-align: center;
-      background-color: var(--accent-bg);
-      color: var(--accent-text);
-      padding: 0.5rem;
+    footer span {
+      color: var(--footer-emoji-color);
     }
 
     select {
       font-size: 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
     }
   </style>
 </head>
@@ -94,7 +94,7 @@
 
   <header>
     <h1>Terms of Service</h1>
-    <p>Understand what you're agreeing to when using our AI bot.</p>
+    <p>Please read this carefully before using the bot.</p>
   </header>
 
   <nav>
@@ -109,8 +109,8 @@
     <ul>
       <li>You will not use the bot for illegal or harmful purposes.</li>
       <li>The bot is provided "as-is" with no guarantees or warranties.</li>
-      <li>The bot may log command usage to improve performance and safety.</li>
-      <li>You are responsible for ensuring the bot’s use aligns with Discord’s Terms of Service.</li>
+      <li>Command usage may be logged for safety and performance improvements.</li>
+      <li>You are responsible for ensuring your use follows Discord’s Terms of Service.</li>
     </ul>
   </main>
 
@@ -120,26 +120,26 @@
 
   <script>
     const themeSelect = document.getElementById('theme-select');
-    const rootElement = document.documentElement;
+    const root = document.documentElement;
 
     function applyTheme(theme) {
       if (theme === 'system') {
-        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        rootElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
       } else {
-        rootElement.setAttribute('data-theme', theme);
+        root.setAttribute('data-theme', theme);
       }
     }
 
     themeSelect.addEventListener('change', () => {
-      const selectedTheme = themeSelect.value;
-      localStorage.setItem('theme', selectedTheme);
-      applyTheme(selectedTheme);
+      const selected = themeSelect.value;
+      localStorage.setItem('theme', selected);
+      applyTheme(selected);
     });
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    themeSelect.value = savedTheme;
-    applyTheme(savedTheme);
+    const saved = localStorage.getItem('theme') || 'light';
+    themeSelect.value = saved;
+    applyTheme(saved);
   </script>
 </body>
 </html>
