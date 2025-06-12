@@ -4,107 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feedback</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: #000;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #4a90e2;
-      color: white;
-      padding: 1.5rem;
-      text-align: center;
-    }
-    nav {
-      background-color: #333;
-      padding: 0.5rem;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 1rem;
-      text-decoration: none;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    main {
+      background: #f9f9f9;
       padding: 2rem;
       max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: auto;
     }
+
+    h1 {
+      text-align: center;
+    }
+
     form {
-      display: flex;
-      flex-direction: column;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
+
     label {
+      display: block;
       margin-top: 1rem;
     }
+
     input, textarea {
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin-top: 0.25rem;
-    }
-    button {
-      margin-top: 1.5rem;
+      width: 100%;
       padding: 0.75rem;
-      font-size: 1rem;
-      background-color: #4a90e2;
+      margin-top: 0.25rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #5865F2;
       color: white;
       border: none;
+      border-radius: 4px;
       cursor: pointer;
+      font-weight: bold;
     }
+
     button:hover {
-      background-color: #3a78c2;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #eee;
-      margin-top: 2rem;
+      background-color: #4752c4;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Feedback</h1>
-    <p>Let us know what you think!</p>
-  </header>
+  <h1>Send Feedback</h1>
+  <form action="https://formspree.io/f/mjkrwjyy" method="POST">
+    <label for="email">Your Email:</label>
+    <input type="email" name="email" id="email" required>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="tos.html">Terms of Service</a>
-    <a href="privacy.html">Privacy Policy</a>
-  </nav>
+    <label for="message">Your Message:</label>
+    <textarea name="message" id="message" rows="6" required></textarea>
 
-  <main>
-    <form action="https://formspree.io/f/mjkrwjyy" method="POST">
-      <label for="name">Your Name:</label>
-      <input type="text" id="name" name="name" required>
+    <!-- Replace with your actual site key -->
+    <div class="g-recaptcha" data-sitekey="6Le1zF4rAAAAAAxWLI97XT2HdwIXhNiIt7n6gBpY"></div>
 
-      <label for="email">Your Email:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="feedback">Your Feedback:</label>
-      <textarea id="feedback" name="message" rows="6" required></textarea>
-
-      <!-- reCAPTCHA -->
-      <div class="g-recaptcha" data-sitekey="6Le1zF4rAAAAAAxWLI97XT2HdwIXhNiIt7n6gBpY"></div>
-
-      <button type="submit">Submit Feedback</button>
-    </form>
-  </main>
-
-  <footer>
-    Made with 💡 and AI.
-  </footer>
-
-  <!-- reCAPTCHA script -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <button type="submit">Submit</button>
+  </form>
 </body>
 </html>
