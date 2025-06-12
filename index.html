@@ -1,77 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="system">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My AI Bot (for Discod)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My AI Discord Bot</title>
   <style>
+    :root {
+      --bg-color-light: #ffffff;
+      --text-color-light: #000000;
+      --bg-color-dark: #121212;
+      --text-color-dark: #ffffff;
+      --accent-color: #000000;
+    }
+
+    html[data-theme='light'] {
+      background-color: var(--bg-color-light);
+      color: var(--text-color-light);
+    }
+
+    html[data-theme='dark'] {
+      background-color: var(--bg-color-dark);
+      color: var(--text-color-dark);
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: #333;
       margin: 0;
       padding: 0;
+      transition: background-color 0.3s, color 0.3s;
     }
+
     header {
-      background-color: #4a90e2;
+      background-color: var(--accent-color);
       color: white;
       padding: 1.5rem;
       text-align: center;
     }
+
     header img {
       height: 80px;
       margin-bottom: 1rem;
     }
+
     nav {
-      background-color: #333;
-      padding: 0.5rem;
+      background-color: #000;
+      padding: 0.75rem;
       text-align: center;
     }
+
     nav a {
       color: white;
       margin: 0 1rem;
       text-decoration: none;
+      font-weight: bold;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
+
     main {
       padding: 2rem;
       max-width: 800px;
       margin: 0 auto;
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
     }
+
     .invite {
-      display: block;
-      margin: 2rem 0;
       text-align: center;
+      margin: 2rem 0;
     }
+
     .invite a {
-      display: inline-block;
       background-color: #5865F2;
       color: white;
       padding: 0.75rem 1.5rem;
       border-radius: 5px;
       text-decoration: none;
-      font-weight: bold;
     }
-    .invite a:hover {
-      background-color: #4752c4;
+
+    .theme-toggle {
+      margin-top: 1rem;
+      text-align: center;
     }
+
+    select {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
     footer {
       text-align: center;
       padding: 1rem;
-      background-color: #eee;
+      background-color: #000;
+      color: white;
       margin-top: 2rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="openai-icon.png" alt="Bot Logo">
+    <img src="openai-icon.png" alt="Bot Logo" />
     <h1>My AI Discord Bot</h1>
-    <p>Custom personalities, helpful responses, and Discord-friendly interactions – all powered by AI.</p>
+    <p>Custom personalities and smart replies, powered by AI.</p>
   </header>
 
   <nav>
@@ -82,17 +114,38 @@
 
   <main>
     <h2>Welcome!</h2>
-    <p>This is the official site for our AI-powered Discord bot. You can interact with it on any server where it’s installed. Use the <code>personality</code> command to customize its tone, and enjoy smart, safe replies from an AI assistant trained with you in mind.</p>
+    <p>This is the official website for our customizable AI Discord bot. Use the <code>personality</code> command to define the bot’s tone, or DM it directly for personalized chats.</p>
 
-    <p>This application and website were generated and written with the help of AI tools, including models developed by OpenAI.</p>
+    <p>This bot and site were created with the help of AI models, including tools from OpenAI.</p>
 
     <div class="invite">
-      <a href="https://discord.com/oauth2/authorize?client_id=1382154587506479275&scope=bot+applications.commands&permissions=274877975552" target="_blank">Invite the Bot to Your Server</a>
+      <a href="https://discord.com/oauth2/authorize?1382154587506479275&scope=bot+applications.commands&permissions=274877975552" target="_blank">Invite the Bot</a>
+    </div>
+
+    <div class="theme-toggle">
+      <label for="theme">Choose a theme: </label>
+      <select id="theme" onchange="setTheme(this.value)">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
     </div>
   </main>
 
   <footer>
-   Made with 💡 and AI.
+    Made with 💡 and AI.
   </footer>
+
+  <script>
+    function setTheme(mode) {
+      document.documentElement.setAttribute('data-theme', mode);
+      localStorage.setItem('theme', mode);
+    }
+
+    // Auto-load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.getElementById('theme').value = savedTheme;
+  </script>
 </body>
 </html>
