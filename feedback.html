@@ -4,24 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feedback</title>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: #000;
       margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      background: #fff;
-      max-width: 600px;
-      margin: 3rem auto;
-      padding: 2rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-left: 10px solid #888; /* gray accent */
-      position: relative;
+      background-color: var(--bg-color, #fff);
+      color: var(--text-color, #000);
     }
 
     .back-arrow {
@@ -29,74 +17,100 @@
       top: 1rem;
       left: 1rem;
       text-decoration: none;
-      font-size: 1.5rem;
-      color: #555;
+      font-size: 2.5rem;
+      color: var(--accent-color, #888);
+    }
+
+    main {
+      max-width: 600px;
+      margin: 5rem auto 2rem;
+      background: #f9f9f9;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     h1 {
       text-align: center;
-      color: #333;
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    label {
-      margin: 1rem 0 0.5rem;
+    form label {
+      display: block;
+      margin-top: 1rem;
       font-weight: bold;
     }
 
-    input, textarea {
+    form input, form textarea {
+      width: 100%;
       padding: 0.75rem;
-      font-size: 1rem;
+      margin-top: 0.5rem;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 1rem;
     }
 
     button {
       margin-top: 1.5rem;
-      padding: 0.75rem;
-      font-size: 1rem;
-      background-color: #5865F2;
+      padding: 0.75rem 2rem;
+      background-color: #4a90e2;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #4752c4;
+      font-size: 1rem;
     }
 
     .success-message {
-      text-align: center;
-      color: green;
-      font-weight: bold;
+      display: none;
       margin-top: 1rem;
+      padding: 1rem;
+      background-color: #dff0d8;
+      color: #3c763d;
+      border: 1px solid #d6e9c6;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
   <a class="back-arrow" href="index.html">&#8592;</a>
 
-  <div class="container">
+  <main>
     <h1>Send Feedback</h1>
-    <form action="https://formspree.io/f/mjkrwjyy" method="POST">
-      <label for="first-name">First Name *</label>
-      <input type="text" id="first-name" name="first-name" required>
+    <form id="feedback-form" action="https://formspree.io/f/mjkrwjyy" method="POST">
+      <label for="name">First Name *</label>
+      <input type="text" id="name" name="name" required>
 
-      <label for="email">Your Email (optional)</label>
-      <input type="email" id="email" name="_replyto" placeholder="you@example.com">
+      <label for="email">Email (optional)</label>
+      <input type="email" id="email" name="email">
 
-      <label for="message">Feedback *</label>
-      <textarea id="message" name="message" rows="6" required></textarea>
-
-      <div class="g-recaptcha" data-sitekey="6Le1zF4rAAAAAAxWLI97XT2HdwIXhNiIt7n6gBpY"></div>
+      <label for="message">Feedback</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
 
       <button type="submit">Submit</button>
+      <div class="success-message" id="success">Thanks for your feedback!</div>
     </form>
-  </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('feedback-form');
+    const success = document.getElementById('success');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          success.style.display = 'block';
+        } else {
+          alert("Oops! There was a problem.");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
