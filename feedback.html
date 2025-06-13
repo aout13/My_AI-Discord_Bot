@@ -4,69 +4,108 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feedback</title>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 2rem;
-      max-width: 600px;
-      margin: auto;
+    :root {
+      --accent-color: #555;
+      --bg-light: #ffffff;
+      --bg-dark: #111111;
+      --text-light: #000000;
+      --text-dark: #ffffff;
     }
 
-    h1 {
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .back {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      background-color: var(--accent-color);
+    }
+
+    .back a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    body.dark main {
+      background: #1a1a1a;
+    }
+
+    h2 {
       text-align: center;
     }
 
     form {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
     }
 
-    label {
-      display: block;
-      margin-top: 1rem;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 0.75rem;
-      margin-top: 0.25rem;
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      margin-bottom: 1rem;
     }
 
     button {
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem;
       background-color: #5865F2;
       color: white;
+      padding: 0.75rem;
+      font-size: 1rem;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
-      font-weight: bold;
     }
 
     button:hover {
       background-color: #4752c4;
     }
   </style>
+  <script>
+    // Apply saved theme
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") document.body.classList.add("dark");
+    if (theme === "light") document.body.classList.remove("dark");
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-  <h1>Send Feedback</h1>
-  <form action="https://formspree.io/f/mjkrwjyy" method="POST">
-    <label for="email">Your Email:</label>
-    <input type="email" name="email" id="email" required>
-
-    <label for="message">Your Message:</label>
-    <textarea name="message" id="message" rows="6" required></textarea>
-
-    <!-- Replace with your actual site key -->
-    <div class="g-recaptcha" data-sitekey="6Le1zF4rAAAAAAxWLI97XT2HdwIXhNiIt7n6gBpY"></div>
-
-    <button type="submit">Submit</button>
-  </form>
+  <div class="back">
+    <a href="index.html">&larr; Back</a>
+  </div>
+  <main>
+    <h2>Send Feedback</h2>
+    <form action="https://formspree.io/f/mjkrwjyy" method="POST">
+      <textarea name="feedback" placeholder="Your feedback..." required></textarea>
+      <div class="g-recaptcha" data-sitekey="6Le1zF4rAAAAAAxWLI97XT2HdwIXhNiIt7n6gBpY"></div>
+      <br />
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </main>
 </body>
 </html>
